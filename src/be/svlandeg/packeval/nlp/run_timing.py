@@ -23,10 +23,10 @@ def time_function(f, name):
 if __name__ == '__main__':
     """ Run and time a list of (combination of) different methods """
 
-    my_text = "An example sentence, in English, which is supposed to be used for quick ... testing of, erm, " \
-              "let's see.. the generation of n-grams and bag-of-words features!"
+    my_text = "An example sentence - in English - which is supposed to be used for quick ... testing of, erm, .. " \
+              "let's see.. the generation of ..... n-grams and bag-of-words features!"
 
-    my_n = range(2, 6)
+    my_n = range(1, 6)
 
     print()
     f_tokenize_nolib = partial(NoLib.tokenize_words, my_text)
