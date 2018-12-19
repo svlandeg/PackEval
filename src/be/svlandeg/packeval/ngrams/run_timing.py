@@ -2,6 +2,7 @@ import time
 from functools import partial
 
 from be.svlandeg.packeval.ngrams.nltk_wrapper import NLTK
+from be.svlandeg.packeval.ngrams.no_lib import NoLib
 
 
 # Perform a certain function and print the timing & functional results
@@ -21,17 +22,15 @@ if __name__ == '__main__':
     my_text = "An example sentence, in English, which is supposed to be used for quick ... testing of, erm, " \
               "let's see.. the generation of n-grams and bag-of-words features!"
 
-    print()
-    f_nltk_2 = partial(NLTK.ngrams_split, 2, my_text)
-    time_function(f_nltk_2, "NLTK 2-gram spit()")
+    my_n = range(2, 6)
 
-    print()
-    f_nltk_3 = partial(NLTK.ngrams_split, 3, my_text)
-    time_function(f_nltk_3, "NLTK 3-gram spit()")
+    for n in my_n:
+        print()
+        f_nltk = partial(NLTK.ngrams_split, n, my_text)
+        time_function(f_nltk, "NLTK " + str(n) + "-gram split()")
 
-    print()
-    f_nltk_4 = partial(NLTK.ngrams_split, 4, my_text)
-    time_function(f_nltk_4, "NLTK 4-gram spit()")
+        print()
+        f_nolib = partial(NoLib.ngrams_split, n, my_text)
+        time_function(f_nolib, "NoLib " + str(n) + "-gram split()")
 
-    print()
 
