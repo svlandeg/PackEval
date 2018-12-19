@@ -16,6 +16,7 @@ def time_function(f, name):
     print(" result length:", len(result))
     print(" result:", *map(' '.join, result), sep=' / ')
     print(" timing (ms):", end-start)
+    print()
 
     return result
 
@@ -28,29 +29,17 @@ if __name__ == '__main__':
 
     my_n = range(1, 6)
 
-    print()
-    f_tokenize_nolib = partial(NoLib.tokenize_words, my_text)
-    tokens_nolib = time_function(f_tokenize_nolib, "NoLib tokenizer")
+    # TOKENIZATION
+    tokens_nolib = time_function(partial(NoLib.tokenize_words, my_text), "NoLib tokenizer")
+    tokens_nltk = time_function(partial(NLTK.tokenize_words, my_text), "NLTK tokenizer")
 
-    print()
-    f_tokenize_nltk = partial(NLTK.tokenize_words, my_text)
-    tokens_nltk = time_function(f_tokenize_nltk, "NLTK tokenizer")
-
+    # NGRAMS
     for n in my_n:
-        print()
-        f_nltk = partial(NLTK.ngrams, n, tokens_nolib)
-        time_function(f_nltk, "NLTK " + str(n) + "-gram with tokens_nolib")
+        time_function(partial(NLTK.ngrams, n, tokens_nolib), "NLTK " + str(n) + "-gram with tokens_nolib")
+        time_function(partial(NoLib.ngrams, n, tokens_nolib), "NoLib " + str(n) + "-gram with tokens_nolib")
+        time_function(partial(NLTK.ngrams, n, tokens_nltk), "NLTK " + str(n) + "-gram with tokens_nltk")
+        time_function(partial(NoLib.ngrams, n, tokens_nltk), "NoLib " + str(n) + "-gram with tokens_nltk")
 
-        print()
-        f_nolib = partial(NoLib.ngrams, n, tokens_nolib)
-        time_function(f_nolib, "NoLib " + str(n) + "-gram with tokens_nolib")
-
-        print()
-        f_nltk = partial(NLTK.ngrams, n, tokens_nltk)
-        time_function(f_nltk, "NLTK " + str(n) + "-gram with tokens_nltk")
-
-        print()
-        f_nolib = partial(NoLib.ngrams, n, tokens_nltk)
-        time_function(f_nolib, "NoLib " + str(n) + "-gram with tokens_nltk")
-
-
+    # EVERY GRAMS
+    time_function(partial(NLTK.everygrams, my_n.stop, tokens_nolib), "NLTK everygram with tokens_nolib and max " + str(my_n.stop))
+    time_function(partial(NLTK.everygrams, my_n.stop, tokens_nltk), "NLTK everygram with tokens_nltk and max " + str(my_n.stop))

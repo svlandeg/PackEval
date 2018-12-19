@@ -18,6 +18,10 @@ class NLTK:
         return list(nltk.ngrams(tokens, n))
 
     @staticmethod
+    def everygrams(max_n, tokens):
+        return list(nltk.everygrams(tokens, max_len=max_n))
+
+    @staticmethod
     def tokenize_words(text):
         # nltk.download('punkt')
         return nltk.word_tokenize(text)
