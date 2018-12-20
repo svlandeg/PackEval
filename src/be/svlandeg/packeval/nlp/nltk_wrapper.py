@@ -1,7 +1,7 @@
 import nltk
 
 
-class NLTK:
+class NltkWrapper:
     @staticmethod
     def ngrams(n, tokens):
         # bigrams (unnecessary specific function in NLTK)
