@@ -1,9 +1,15 @@
+from be.svlandeg.packeval.nlp.nlp_lib import NLPlib
+from typing import List
+
 import nltk
 
 
-class NltkWrapper:
-    @staticmethod
-    def ngrams(n, tokens):
+class NltkWrapper(NLPlib):
+
+    def __init__(self):
+        super().__init__("NLTK")
+
+    def ngrams(self, n, tokens) -> List[str]:
         # bigrams (unnecessary specific function in NLTK)
         if n == 2:
             result = list(nltk.bigrams(tokens))
@@ -17,11 +23,9 @@ class NltkWrapper:
         # default: ngrams
         return list(nltk.ngrams(tokens, n))
 
-    @staticmethod
-    def everygrams(max_n, tokens):
+    def everygrams(self, max_n, tokens):
         return list(nltk.everygrams(tokens, max_len=max_n))
 
-    @staticmethod
-    def tokenize_words(text):
+    def tokenize_words(self, text) -> List[str]:
         # nltk.download('punkt')
         return nltk.word_tokenize(text)

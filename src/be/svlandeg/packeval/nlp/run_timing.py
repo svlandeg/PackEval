@@ -6,6 +6,32 @@ from be.svlandeg.packeval.nlp.spacy_wrapper import SpacyWrapper
 from be.svlandeg.packeval.nlp.no_lib import NoLib
 
 
+def experiment_crossovers(n_range):
+    # TOKENIZATION
+    tokens_nltk = time_function(partial(NltkWrapper().tokenize_words, my_text), "NLTK tokenizer")
+    tokens_spacy = time_function(partial(SpacyWrapper().tokenize_words, my_text), "Spacy tokenizer")
+
+    # NGRAMS
+    for n in n_range:
+        time_function(partial(NltkWrapper().ngrams, n, tokens_spacy), "NLTK " + str(n) + "-gram with spaCy tokens")
+        time_function(partial(NoLib().ngrams, n, tokens_spacy), "NoLib " + str(n) + "-gram with spaCy tokens")
+        time_function(partial(NltkWrapper().ngrams, n, tokens_nltk), "NLTK " + str(n) + "-gram with NLTK tokens")
+        time_function(partial(NoLib().ngrams, n, tokens_nltk), "NoLib " + str(n) + "-gram with NLTK tokens")
+
+    # EVERY GRAMS
+    time_function(partial(NltkWrapper().everygrams, my_n.stop, tokens_spacy), "NLTK everygram with spaCy tokens and max " + str(my_n.stop))
+    time_function(partial(NltkWrapper().everygrams, my_n.stop, tokens_nltk), "NLTK everygram with NLTK tokens and max " + str(my_n.stop))
+
+
+def experiment_word_tokens():
+    my_libs = {NoLib(), NltkWrapper(), SpacyWrapper()}
+
+    for lib in my_libs:
+        tokens = time_function(partial(lib.tokenize_words, my_text), lib.name + " tokenizer")
+        bow = time_function(partial(NoLib().ngrams, 1, tokens), lib.name + " BOW")
+        print()
+
+
 def time_function(f, name):
     """ Perform a certain function and print the timing & functional results """
     print("EXECUTING", name)
@@ -30,18 +56,8 @@ if __name__ == '__main__':
 
     my_n = range(1, 6)
 
-    # TOKENIZATION
-    tokens_nolib = time_function(partial(NoLib.tokenize_words, my_text), "NoLib tokenizer")
-    tokens_nltk = time_function(partial(NltkWrapper.tokenize_words, my_text), "NLTK tokenizer")
-    tokens_spacy = time_function(partial(SpacyWrapper.tokenize_words, my_text), "Spacy tokenizer")
+    # EXPERIMENT 1 : tokens & n-grams
+    # experiment_crossovers(my_n)
 
-    # NGRAMS
-    for n in my_n:
-        time_function(partial(NltkWrapper.ngrams, n, tokens_nolib), "NLTK " + str(n) + "-gram with tokens_nolib")
-        time_function(partial(NoLib.ngrams, n, tokens_nolib), "NoLib " + str(n) + "-gram with tokens_nolib")
-        time_function(partial(NltkWrapper.ngrams, n, tokens_nltk), "NLTK " + str(n) + "-gram with tokens_nltk")
-        time_function(partial(NoLib.ngrams, n, tokens_nltk), "NoLib " + str(n) + "-gram with tokens_nltk")
-
-    # EVERY GRAMS
-    time_function(partial(NltkWrapper.everygrams, my_n.stop, tokens_nolib), "NLTK everygram with tokens_nolib and max " + str(my_n.stop))
-    time_function(partial(NltkWrapper.everygrams, my_n.stop, tokens_nltk), "NLTK everygram with tokens_nltk and max " + str(my_n.stop))
+    # EXPERIMENT 2 : word tokenization
+    experiment_word_tokens()
