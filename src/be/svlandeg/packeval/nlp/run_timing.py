@@ -32,6 +32,14 @@ def experiment_word_tokens():
         print()
 
 
+def experiment_sentence_boundaries():
+    tokens_dep = time_function(partial(SpacyWrapper().tokenize_sentences_dep, my_text), " spaCy dep sentence tokenizer")
+    sentences_dep = time_function(partial(NoLib().ngrams, 1, tokens_dep), " BOW")
+    print()
+    tokens_rules = time_function(partial(SpacyWrapper().tokenize_sentences_rules, my_text), " spaCy dep sentence tokenizer")
+    sentences_rules = time_function(partial(NoLib().ngrams, 1, tokens_rules), " BOW")
+
+
 def time_function(f, name):
     """ Perform a certain function and print the timing & functional results """
     print("EXECUTING", name)
@@ -60,4 +68,7 @@ if __name__ == '__main__':
     # experiment_crossovers(my_n)
 
     # EXPERIMENT 2 : word tokenization
-    experiment_word_tokens()
+    # experiment_word_tokens()
+
+    # EXPERIMENT 3 : sentence tokenization
+    experiment_sentence_boundaries()

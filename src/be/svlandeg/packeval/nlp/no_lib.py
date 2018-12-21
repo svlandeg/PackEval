@@ -19,3 +19,6 @@ class NoLib(NLPlib):
         """ Ridiculous (and frequently used) tokenization method """
         return text.split()
 
+    def tokenize_sentences(self, text) -> List[str]:
+        return list()
+

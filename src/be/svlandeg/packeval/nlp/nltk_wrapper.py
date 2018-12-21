@@ -29,3 +29,6 @@ class NltkWrapper(NLPlib):
     def tokenize_words(self, text) -> List[str]:
         # nltk.download('punkt')
         return nltk.word_tokenize(text)
+
+    def tokenize_sentences(self, text) -> List[str]:
+        return list()
