@@ -22,21 +22,24 @@ class SpacyWrapper(NLPlib):
         return [token.text for token in doc]
 
     def tokenize_sentences(self, text) -> List[str]:
-        """ Two different options here """
-        # return self._tokenize_sentences_dep(text)
-        return self._tokenize_sentences_rules(text)
-
-    def tokenize_sentences_dep(self, text) -> List[str]:
-        """ spaCy implementation using dependency parsing """
-        # install this with: python -m spacy download en_core_web_sm
-        nlp = spacy.load('en_core_web_sm')
-        doc = nlp(text)
-        return [s.text for s in doc.sents]
-
-    def tokenize_sentences_rules(self, text) -> List[str]:
         """ spaCy's rule-based implementation """
         nlp = English()
         sbd = nlp.create_pipe('sentencizer')
         nlp.add_pipe(sbd)
+        doc = nlp(text)
+        return [s.text for s in doc.sents]
+
+
+class SpacyModelWrapper(SpacyWrapper):
+
+    def __init__(self, model):
+        super().__init__()
+        self.name = "spaCy_" + model
+        self.model = model
+
+    def tokenize_sentences(self, text) -> List[str]:
+        """ spaCy implementation using dependency parsing """
+        # install this with: python -m spacy download en_core_web_sm
+        nlp = spacy.load(self.model)
         doc = nlp(text)
         return [s.text for s in doc.sents]
