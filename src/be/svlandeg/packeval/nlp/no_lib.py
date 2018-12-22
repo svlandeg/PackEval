@@ -1,3 +1,5 @@
+import re
+
 from be.svlandeg.packeval.nlp.nlp_lib import NLPlib
 from typing import List
 
@@ -20,5 +22,5 @@ class NoLib(NLPlib):
         return text.split()
 
     def tokenize_sentences(self, text) -> List[str]:
-        return list()
+        return re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
 

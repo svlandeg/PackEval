@@ -58,7 +58,6 @@ if __name__ == '__main__':
 
     my_text = "An example sentence - in English - which is supposed to be used for quick ... testing of, erm, .. " \
               "let's see.. the generation of ..... n-grams and bag-of-words features! Oh and here's another sentence."
-
     my_n = range(1, 6)
 
     # EXPERIMENT 1 : tokens & n-grams

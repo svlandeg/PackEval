@@ -31,4 +31,4 @@ class NltkWrapper(NLPlib):
         return nltk.word_tokenize(text)
 
     def tokenize_sentences(self, text) -> List[str]:
-        return list()
+        return nltk.tokenize.sent_tokenize(text)
