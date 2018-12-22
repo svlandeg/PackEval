@@ -21,7 +21,7 @@ class SpacyWrapper(NLPlib):
         doc = nlp(text)
         return [token.text for token in doc]
 
-    def tokenize_sentences(self, text) -> List[str]:
+    def segment_sentences(self, text) -> List[str]:
         """ spaCy's rule-based implementation """
         nlp = English()
         sbd = nlp.create_pipe('sentencizer')
@@ -37,7 +37,7 @@ class SpacyModelWrapper(SpacyWrapper):
         self.name = "spaCy_" + model
         self.model = model
 
-    def tokenize_sentences(self, text) -> List[str]:
+    def segment_sentences(self, text) -> List[str]:
         """ spaCy implementation using dependency parsing """
         # install this with: python -m spacy download en_core_web_sm
         nlp = spacy.load(self.model)

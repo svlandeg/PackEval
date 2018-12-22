@@ -21,6 +21,6 @@ class NoLib(NLPlib):
         """ Ridiculous (and frequently used) tokenization method """
         return text.split()
 
-    def tokenize_sentences(self, text) -> List[str]:
-        return re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
+    def segment_sentences(self, text) -> List[str]:
+        return re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=[.?!])\s', text)
 

@@ -27,14 +27,14 @@ def experiment_word_tokens():
     my_libs = {NoLib(), NltkWrapper(), SpacyWrapper()}
 
     for lib in my_libs:
-        tokens = time_function(partial(lib.tokenize_words, my_text), lib.name + " tokenizer")
+        time_function(partial(lib.tokenize_words, my_text), lib.name + " tokenizer")
 
 
 def experiment_sentence_boundaries():
     my_libs = {NoLib(), NltkWrapper(), SpacyWrapper(), SpacyModelWrapper('en_core_web_sm')}
 
     for lib in my_libs:
-        tokens = time_function(partial(lib.tokenize_sentences, my_text), lib.name + " sentence tokenizer")
+        time_function(partial(lib.segment_sentences, my_text), lib.name + " sentence tokenizer")
 
 
 def time_function(f, name, join_char=''):
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     """ Run and time a list of (combination of) different methods """
 
     my_text = "An example sentence - in English - which is supposed to be used for quick ... testing of, erm, .. " \
-              "let's see.. the generation of ..... n-grams and bag-of-words features! Oh and here's another sentence."
+              "let's see.. the generation of ..... n-grams and bag-of-words features! Oh and here's another sentence? Right."
     my_n = range(1, 6)
 
     # EXPERIMENT 1 : tokens & n-grams

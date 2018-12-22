@@ -30,5 +30,5 @@ class NltkWrapper(NLPlib):
         # nltk.download('punkt')
         return nltk.word_tokenize(text)
 
-    def tokenize_sentences(self, text) -> List[str]:
+    def segment_sentences(self, text) -> List[str]:
         return nltk.tokenize.sent_tokenize(text)

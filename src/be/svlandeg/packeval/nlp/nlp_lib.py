@@ -21,7 +21,7 @@ class NLPlib(ABC):
         raise NotImplementedError('tokenize_words for ' + self.name)
 
     @abstractmethod
-    def tokenize_sentences(self, text) -> List[str]:
+    def segment_sentences(self, text) -> List[str]:
         raise NotImplementedError('tokenize_sentences for ' + self.name)
 
 
