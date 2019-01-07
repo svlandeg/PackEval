@@ -37,6 +37,7 @@ def read_raw_annotations():
     ud_eng_path = os.path.join(ud_location, ud_eng)
     train_conllu = os.path.join(ud_eng_path, 'en_partut-ud-train.conllu')
 
+    to_print_indices = []
     with open(train_conllu, 'r', encoding='utf-8') as fin:
         for line in fin:
             pure_text = line.rstrip('\n')
@@ -50,10 +51,12 @@ def read_raw_annotations():
                 print("Found weird comment line: ", pure_text)
             if is_doc:
                 doc_id = pure_text.replace("# newdoc id = ", "")
+                to_print_indices = []
             if is_text:
                 text = pure_text.replace("# text = ", "")
             if is_sentence:
                 sent_id = pure_text.replace("# sent_id = ", "")
+                to_print_indices = []
             if not is_comment:
                 word = pure_text.split('\t')
                 # print(pure_text)
@@ -62,6 +65,11 @@ def read_raw_annotations():
                 if len(pure_text) > 0:
                     word_index = word[0]
                     if '-' in word_index:
+                        indices = word_index.split('-')
+                        to_print_indices = range(int(indices[0]), int(indices[1])+1)
+                        print()
+                        print(word)
+                    elif int(word_index) in to_print_indices:
                         print(word)
 
 
