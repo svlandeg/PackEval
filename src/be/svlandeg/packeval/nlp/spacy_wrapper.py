@@ -24,6 +24,7 @@ class SpacyWrapper(NLPlib):
     def segment_sentences(self, text) -> List[str]:
         """ spaCy's rule-based implementation """
         nlp = English()
+        nlp.max_length = len(text)
         sbd = nlp.create_pipe('sentencizer')
         nlp.add_pipe(sbd)
         doc = nlp(text)
@@ -41,5 +42,6 @@ class SpacyModelWrapper(SpacyWrapper):
         """ spaCy implementation using dependency parsing """
         # install this with: python -m spacy download en_core_web_sm
         nlp = spacy.load(self.model)
+        nlp.max_length = len(text)
         doc = nlp(text)
         return [s.text for s in doc.sents]
