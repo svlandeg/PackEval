@@ -83,7 +83,7 @@ def read_raw_annotations(train_conllu, print_multi_word=False):
                         if print_multi_word:
                             print(word)
 
-    print(train_conllu)
+    print()
     print(docs, "documents")
     print(doc_ids, "documents IDs")
     print(sentence_ids, "sentence IDs")
@@ -110,7 +110,8 @@ if __name__ == '__main__':
     list_files.append(os.path.join(ud_location, 'UD_English-ParTUT', 'en_partut-ud-train.conllu'))
 
     for train_conllu in list_files:
-        read_raw_annotations(train_conllu)
+        print(train_conllu)
+        read_raw_annotations(train_conllu, print_multi_word=True)
         print()
 
 
